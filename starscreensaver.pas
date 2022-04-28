@@ -3,9 +3,9 @@ uses crt;  // Including crt library;
 
 const
     kDelayDurationAdd = 5;  // Delay time in milliseconds.
-    kDelayDurationRem = 2;  // Delay time in milliseconds.
+    kDelayDurationRem = 5;  // Delay time in milliseconds.
     kDelayDurationError = 3000;  // Delay for reading error message.
-    kMinScrFill = 15;  // "Percentage" of minimum screen fill (integer, 5 means 20%).
+    kMinScrFill = 20;  // "Percentage" of minimum screen fill (integer, 5 means 20%).
     kMaxScrFill = 5;  // "Percentage" of maximum screen fill (integer, 2 means 50%).
     kColorCount = 15;  // Value of text colors (all colors except black).
 
@@ -34,8 +34,10 @@ procedure PrintRandomColorStar(var arColor: AllColorsArray; var arDb: CellOfScre
 var
     cX, cY, cC: integer;
 begin
-    cX := random(ScreenWidth) + 1;
-    cY := random(ScreenHeight) + 1;
+    repeat
+        cX := random(ScreenWidth) + 1;
+        cY := random(ScreenHeight) + 1
+    until not arDb[cX, cY];
     if (cX = ScreenWidth) and (cY = ScreenHeight) then
         exit;
     cC := random(kColorCount) + 1;
@@ -50,8 +52,10 @@ procedure RemoveRandomStar(var arDb: CellOfScreenArray);
 var
     cX, cY: integer;
 begin
-    cX := random(ScreenWidth) + 1;
-    cY := random(ScreenHeight) + 1;
+    repeat
+        cX := random(ScreenWidth) + 1;
+        cY := random(ScreenHeight) + 1
+    until arDb[cX, cY];
     if (cX = ScreenWidth) and (cY = ScreenHeight) then
         exit;
     GotoXY(cX, cY);
@@ -116,4 +120,3 @@ end;
 write(#27'[0m');
 clrscr
 end.
-
